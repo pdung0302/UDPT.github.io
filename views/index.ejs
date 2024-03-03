@@ -21,10 +21,15 @@
                 </video>
                 <br /><br />
                 <div id="idtest">
-                  <video id="remoteStream" width="300" controls></video>
+                  <video id="remoteStream" width="300" controls>
+                  </video>
                 </div>
                 <div id="idtesth1">
-                  <h1>Hello</h1>
+                    <div class="quizzes">
+                        <% quizzes.forEach(quiz => { %>
+                          <a href="./quiz?name=<%- quiz.slug %>"><button><%= quiz.title %></button></a>
+                        <% }) %>
+                      </div>
                 </div>
                 <br /><br />
                 <input type="text" id="remoteID" placeholder="Remote ID">
