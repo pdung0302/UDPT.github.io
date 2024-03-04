@@ -79,5 +79,44 @@ function loadQuestion(questionNum) {
             answersContainer.appendChild(checkBtn);
             answersContainer.dataset.type = "txt";
         }
+
+        correctCount.innerHTML = `Correct: ${correct}`;
+    }
+}
+
+function checkAnser() {
+    switch (answersContainer.dataset.type) {
+        case "mc":
+            Array.from(answersContainer.children[0].children).forEach((button) => {
+                if(button.dataset.correct === "true") {
+                    button.classList.add("correct");
+                }
+                if(button.dataset.correct === "true" && button.dataset.clicked === "true") {
+                    correct++;
+                } else {
+                    button.classList.add("wrong");
+                }
+            });
+            currentQuestion++;
+            break;
+
+        case "txt":
+            var qInputElement = answersContainer.children[0];
+            var foundValue = question[currentQuestion].answers.find((answer) =>
+                answer.toUpperCase() === qInputElement.ariaValueMax.toUpperCase() 
+            );
+
+            if(foundValue) {
+                qInputElement.classList.add("correct");
+                correct++;
+            } else {
+                qInputElement.classList.add("wrong");
+            }
+            currentQuestion++;
+            break;
+    
+        default:
+            return;
+            break;
     }
 }

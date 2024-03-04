@@ -21,23 +21,27 @@ app.get('/', function(req, res){
     res.render('index.ejs', {quizzes});
 });
 
+app.get('/quiz', (req, res) => {
+    res.render('quiz.ejs', {query: req.query.name});
+});
+
 const quizFile = fs.readdirSync("./data").filter((name) => name.endsWith(".js"));
 
 const quizzes = [];
 
 for(const file of quizFile) {
-    const quizFiles = require(`./data/${file}`);
+    const quizFiles = require("./data/" + file);
     quizzes.push({
       title: quizFiles.quizData.title,
       slug: file.replace(".js", "")
     });
 }
 
-app.get("/quiz", (req, res) => {
-    res.render("quiz.ejs", {query: req.query.name});
-});
+// for(const file of quizFile) {
+//   const quizFiles = require("./data/" + file);
 
-
+//   console.log(quizFiles.quizData.title);
+// }
 
 server.listen(3001, () => {
     console.log("Server running...");
