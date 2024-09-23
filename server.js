@@ -7,6 +7,7 @@ const io = require('socket.io')(server, {cors: {origin: "*"}});
 const path = require('path'); 
 const fs = require("fs");
 // const { title } = require('process');
+require('dotenv').config();
 
 
 app.use(express.static(path.join(__dirname, "/public"))); 
@@ -20,11 +21,12 @@ app.get('/', function(req, res){
     res.render("index.ejs");
 });
 
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-
-server.listen(3001, () => {
-    console.log("Server running...");
-});
+// server.listen(3001, () => {
+//     console.log("Server running...");
+// });
 
 const arrUserInfo = [];
 
