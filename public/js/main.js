@@ -4,23 +4,23 @@ var peer = null;
 
 
 // Đảm bảo rằng đoạn mã javacript đã được thực thi khi DOM đc hoành thành
-$(document).ready(function() {
+$(document).ready(function () {
 
-        const socket = io('http://localhost:3001');
-        const peer = new Peer(null, {
+    const socket = io('http://localhost:3001');
+    const peer = new Peer(null, {
         host: "localhost",
         port: 9090,
         path: "/peerserver",
     });
 
-    peer.on('open', function(id) {
+    peer.on('open', function (id) {
         // Display the peer ID in the 'mydiv' element
         $("#mydiv").text("Your ID: " + id);
         console.log("Your ID: " + id);
 
         $('#btnSignUp').click(() => {
             const username = $('#txtUsername').val();
-            socket.emit('NGUOI_DUNG_DANG_KY', {name: username, peerId: id});
+            socket.emit('NGUOI_DUNG_DANG_KY', { name: username, peerId: id });
         });
     });
 
@@ -31,12 +31,12 @@ $(document).ready(function() {
         $('#div-dang-ky').hide();
 
         arrUserInfo.forEach(user => {
-            const {name, peerId} = user;
+            const { name, peerId } = user;
             $('#ulUser').append(`<li id="${peerId}">${name}</li>`);
         });
 
         socket.on('CO_NGUOI_DUNG_MOI', user => {
-            const {name, peerId} = user;
+            const { name, peerId } = user;
             $('#ulUser').append(`<li id="${peerId}">${name}</li>`);
         });
 
@@ -65,37 +65,37 @@ $(document).ready(function() {
     $("#btnCall").click(() => {
         const id = $("#remoteID").val();
         openStream()
-        .then(stream => {
-            playStream('localStream', stream);
-            const call = peer.call(id, stream);
-            call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-        });
+            .then(stream => {
+                playStream('localStream', stream);
+                const call = peer.call(id, stream);
+                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+            });
     });
 
     // Callee: người nhận
     peer.on('call', call => {
         openStream()
-        .then(stream => {
-            call.answer(stream);
-            playStream('localStream', stream);
-            call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-        });
+            .then(stream => {
+                call.answer(stream);
+                playStream('localStream', stream);
+                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+            });
     });
 
     // socket.on('connect', () => {
     //     console.log('Connected to the server');
     // });
 
-   $('#ulUser').on('click', 'li', function() {
+    $('#ulUser').on('click', 'li', function () {
         const id = $(this).attr('id');
 
         openStream()
-        .then(stream => {
-            playStream('localStream', stream);
-            const call = peer.call(id, stream);
-            call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-        });
-   });
+            .then(stream => {
+                playStream('localStream', stream);
+                const call = peer.call(id, stream);
+                call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+            });
+    });
 
 });
 
