@@ -22,10 +22,13 @@ app.get('/', function (req, res) {
 });
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 // server.listen(3001, () => {
-//     console.log("Server running...");
+//   console.log("Server running...");
 // });
 
 const arrUserInfo = [];
