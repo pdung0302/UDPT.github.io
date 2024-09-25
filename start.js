@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 // Đường dẫn đến peerServer.js
-const peerServerPath = path.join(__dirname, 'public', 'js', 'peerserver.js');
+const peerServerPath = path.join(__dirname, 'public', 'js', 'peerServer.js');
 
 // Kiểm tra nếu peerServer.js tồn tại
 if (fs.existsSync(peerServerPath)) {
